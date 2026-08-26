@@ -45,7 +45,7 @@
     var srcsetAttr = item.srcset ? ' srcset="' + esc(item.srcset) + '" sizes="(max-width:560px) 100vw, (max-width:1024px) 50vw, 33vw"' : "";
     var pos = item.imagePosition ? ' style="object-position:' + esc(item.imagePosition) + '"' : "";
     return (
-      '<article class="menu-card reveal in" data-id="' + esc(item.id) + '">' +
+      '<article class="menu-card m-enter" data-id="' + esc(item.id) + '">' +
       '<div class="menu-card-media">' +
       '<img src="' + esc(item.image) + '"' + srcsetAttr +
       ' alt="' + esc(item.imageAlt) + '" width="1200" height="900" loading="lazy" decoding="async"' + pos + ">" +
@@ -92,7 +92,7 @@
   tablist.innerHTML = CATS.map(function (c, i) {
     return (
       '<button class="menu-tab" role="tab" id="tab-' + c.id + '" ' +
-      'aria-selected="' + (i === 0) + '" data-cat="' + c.id + '" tabindex="' + (i === 0 ? 0 : -1) + '">' +
+      'aria-selected="' + (i === 0) + '" aria-pressed="' + (i === 0) + '" data-cat="' + c.id + '" tabindex="' + (i === 0 ? 0 : -1) + '">' +
       esc(c.label) +
       "</button>"
     );
@@ -106,10 +106,15 @@
 
   function selectTab(btn) {
     [].slice.call(tablist.querySelectorAll("[role=tab]")).forEach(function (t) {
-      t.setAttribute("aria-selected", t === btn ? "true" : "false");
-      t.tabIndex = t === btn ? 0 : -1;
+      var sel = t === btn;
+      t.setAttribute("aria-selected", sel ? "true" : "false");
+      t.setAttribute("aria-pressed", sel ? "true" : "false");
+      t.tabIndex = sel ? 0 : -1;
     });
     state.cat = btn.dataset.cat;
+    if (window.INDOGUNA_ANALYTICS) {
+      window.INDOGUNA_ANALYTICS.trackEvent("menu_filter_selected", { category: state.cat });
+    }
     render();
   }
 
@@ -137,6 +142,13 @@
     debounce = setTimeout(function () {
       state.q = search.value.trim();
       clearBtn.hidden = !state.q;
+      if (state.q && window.INDOGUNA_ANALYTICS) {
+        var key = "menu_search_used";
+        if (!render.__searchLogged) {
+          window.INDOGUNA_ANALYTICS.trackEvent(key, {});
+          render.__searchLogged = true;
+        }
+      }
       render();
     }, reduced ? 0 : 120);
   });
