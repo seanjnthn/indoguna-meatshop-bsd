@@ -24,6 +24,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/img/favicon-32.png">
 <link rel="preload" as="image" href="assets/video/hero-poster.jpg" media="(max-width: 768px)">
+<link rel="stylesheet" href="assets/css/menu.css">
+<script src="assets/data/menu-data.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,6 +45,28 @@
   "priceRange": "Rp 100.000–250.000",
   "image": "https://seanjnthn.github.io/indoguna-meatshop-bsd/assets/img/og-image.jpg",
   "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.5", "reviewCount": "507" },
+  "hasMenu": {
+    "@type": "Menu",
+    "name": "Indoguna Meatshop & Gourmet BSD Menu",
+    "hasMenuSection": [
+      {
+        "@type": "MenuSection",
+        "name": "From the Grill",
+        "hasMenuItem": [
+          { "@type": "MenuItem", "name": "BBQ Beef Back Ribs (3 Bones)", "description": "Barbecued beef back ribs glazed in barbecue sauce, served as a three-bone rack." },
+          { "@type": "MenuItem", "name": "Lamb Chops (3 Slices)", "description": "Grilled lamb chops, served as three slices with the bone in." },
+          { "@type": "MenuItem", "name": "Mix Sausage With Mix Condiment", "description": "A platter of assorted grilled sausages served with a selection of condiments." }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Steak Service",
+        "hasMenuItem": [
+          { "@type": "MenuItem", "name": "Cook Your Cut Service", "description": "Pick any cut from the retail counter and have the kitchen grill it for you, including side dish and complements. Cooking surcharge approx. Rp 60.000 (reported by Side.id; confirm current rate with the restaurant)." }
+        ]
+      }
+    ]
+  },
   "openingHoursSpecification": [{
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -323,6 +347,7 @@ footer{
   </a>
   <div class="nav-links">
     <a href="#about">About</a>
+    <a href="#full-menu">Menu</a>
     <a href="#menu">The Counter</a>
     <a href="#reviews">Reviews</a>
     <a href="#visit">Visit</a>
@@ -331,7 +356,18 @@ footer{
       Call
     </a>
   </div>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about">About</a>
+  <a href="#full-menu">Menu</a>
+  <a href="#menu">The Counter</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#visit">Visit</a>
+  <a href="tel:+622130305524">Call (021) 3030 5524</a>
+</div>
 
 <header class="hero" id="top">
   <div class="hero-media" aria-hidden="true">
@@ -408,6 +444,34 @@ footer{
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
       <p><strong>Eat here, shop too:</strong> everything on the menu comes from the retail counter next door — grab the same cuts, spices and imported seasonings for your own kitchen.</p>
     </div>
+  </div>
+</section>
+
+<section class="full-menu" id="full-menu" aria-labelledby="fullMenuTitle">
+  <div class="wrap">
+    <span class="sec-label reveal in">Full Menu</span>
+    <h2 class="sec-title reveal in" id="fullMenuTitle">Explore our menu</h2>
+    <p style="margin-top:18px;max-width:56ch;color:rgba(243,234,217,.75)">Guest favourites from the grill, the cook-your-cut service, and what to pick up from the retail counter — search or filter below.</p>
+    <div class="menu-toolbar">
+      <div class="menu-search">
+        <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <label for="menuSearch" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search the menu</label>
+        <input type="search" id="menuSearch" placeholder="Search menu… (e.g. ribs, wagyu, sausage)" autocomplete="off">
+        <button class="menu-clear" id="menuSearchClear" hidden aria-label="Clear search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div class="menu-tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
+        <p class="menu-count" id="menuCount" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+    <div class="menu-empty" id="menuEmpty" hidden>
+      <b>Nothing matches your search</b>
+      Try a different keyword — for example "steak", "lamb", "saus" or "wagyu".
+    </div>
+    <p class="menu-disclaimer">Menu, availability, and prices may change. Please contact the restaurant for the latest information. Images marked &ldquo;Ilustrasi&rdquo; are illustrative renderings, not photographs of the actual dishes.</p>
   </div>
 </section>
 
@@ -612,5 +676,6 @@ footer{
   } catch(e){}
 })();
 </script>
+<script src="assets/js/menu.js" defer></script>
 </body>
 </html>

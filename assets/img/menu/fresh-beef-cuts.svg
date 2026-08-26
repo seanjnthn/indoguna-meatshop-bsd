@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Illustration of fresh marbled wagyu and lean beef cuts on butcher paper">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="85%">
+<stop offset="0%" stop-color="#241a11"/><stop offset="100%" stop-color="#120d08"/>
+</radialGradient>
+</defs>
+<rect width="400" height="300" fill="url(#bg)"/>
+
+<ellipse cx="200" cy="248" rx="160" ry="24" fill="#0c0805" opacity=".85"/>
+<path d="M52 236 Q46 214 76 208 L330 190 Q360 189 358 210 Q356 228 328 232 L84 244 Q56 245 52 236Z" fill="#e9dfcc" opacity=".16"/>
+<ellipse cx="150" cy="180" rx="88" ry="58" transform="rotate(-8 150 180)" fill="#6e2f2a"/>
+<ellipse cx="150" cy="176" rx="76" ry="47" transform="rotate(-8 150 176)" fill="#93393a"/>
+<path d="M96 168 q14 -12 30 -2 q14 9 30 0 q16 -9 32 2" stroke="#f3ead9" stroke-width="3" fill="none" opacity=".75" transform="rotate(-6 150 170)"/>
+<path d="M104 190 q16 -10 32 0 q16 9 32 -1" stroke="#f3ead9" stroke-width="2.4" fill="none" opacity=".55" transform="rotate(-6 150 186)"/>
+<ellipse cx="292" cy="196" rx="62" ry="40" transform="rotate(6 292 196)" fill="#7a3d1c"/>
+<ellipse cx="292" cy="192" rx="52" ry="31" transform="rotate(6 292 192)" fill="#a05a28"/>
+<path d="M256 184 q12 -8 26 0 q13 8 26 0" stroke="#e8952f" stroke-width="2.6" fill="none" opacity=".8" transform="rotate(4 292 184)"/>
+<path d="M350 120 L392 162 M356 114 L398 156" stroke="#c9c2b6" stroke-width="5" stroke-linecap="round"/>
+<path d="M344 112 l14 -8 l10 10 l-14 8z" fill="#3a2c1c"/>
+
+</svg>
