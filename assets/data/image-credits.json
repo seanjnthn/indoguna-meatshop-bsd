@@ -2,24 +2,28 @@
   {
     "assetId": "menu-bbq-beef-back-ribs",
     "menuItemId": "bbq-beef-back-ribs",
-    "file": "assets/img/menu/ribs-1200.webp",
-    "altFiles": ["assets/img/menu/ribs-640.webp"],
-    "sourcePlatform": "Pexels",
-    "sourceAssetId": "12884544",
-    "sourceName": "Dana Sredojevic",
-    "sourcePageUrl": "https://www.pexels.com/photo/12884544/",
-    "licenseName": "Pexels License",
-    "licensePageUrl": "https://www.pexels.com/license/",
+    "file": "assets/img/menu/bbq-beef-ribs-1200.webp",
+    "altFiles": [
+      "assets/img/menu/bbq-beef-ribs-640.webp"
+    ],
+    "sourcePlatform": "Pixabay",
+    "sourceAssetId": "6218752",
+    "sourceName": "dietates (Pixabay contributor)",
+    "sourcePageUrl": "https://pixabay.com/photos/short-ribs-steak-food-dish-beef-6218752/",
+    "licenseName": "Pixabay Content License",
+    "licensePageUrl": "https://pixabay.com/service/license-summary/",
     "licenseChecked": "2026-08-26",
     "requiresAttribution": false,
     "imageStatus": "representative",
-    "usageNotes": "Licensed stock photograph used as a visual reference; not Indoguna's actual plating."
+    "usageNotes": "Cooked beef short ribs with glaze on plate; beef confirmed by source title/tags. Visual reference only."
   },
   {
     "assetId": "menu-lamb-chops",
     "menuItemId": "lamb-chops",
     "file": "assets/img/menu/lamb-1200.webp",
-    "altFiles": ["assets/img/menu/lamb-640.webp"],
+    "altFiles": [
+      "assets/img/menu/lamb-640.webp"
+    ],
     "sourcePlatform": "Pexels",
     "sourceAssetId": "7741798",
     "sourceName": "Emre Vonal",
@@ -35,7 +39,9 @@
     "assetId": "menu-mix-sausage",
     "menuItemId": "mix-sausage",
     "file": "assets/img/menu/sausage-1200.webp",
-    "altFiles": ["assets/img/menu/sausage-640.webp"],
+    "altFiles": [
+      "assets/img/menu/sausage-640.webp"
+    ],
     "sourcePlatform": "Pexels",
     "sourceAssetId": "5253033",
     "sourceName": "Baworn Srisatjalertwaja",
@@ -51,7 +57,9 @@
     "assetId": "menu-cook-your-cut",
     "menuItemId": "cook-your-cut",
     "file": "assets/img/menu/counter_case-1200.webp",
-    "altFiles": ["assets/img/menu/counter_case-640.webp"],
+    "altFiles": [
+      "assets/img/menu/counter_case-640.webp"
+    ],
     "sourcePlatform": "Pexels",
     "sourceAssetId": "6138720",
     "sourceName": "Federico Arnaboldi",
@@ -67,7 +75,9 @@
     "assetId": "menu-fresh-beef-cuts",
     "menuItemId": "fresh-beef-cuts",
     "file": "assets/img/menu/raw_cuts-1200.webp",
-    "altFiles": ["assets/img/menu/raw_cuts-640.webp"],
+    "altFiles": [
+      "assets/img/menu/raw_cuts-640.webp"
+    ],
     "sourcePlatform": "Pexels",
     "sourceAssetId": "9541976",
     "sourceName": "Nadin Sh",
@@ -83,7 +93,9 @@
     "assetId": "menu-imported-seasonings",
     "menuItemId": "imported-seasonings",
     "file": "assets/img/menu/seasonings-1200.webp",
-    "altFiles": ["assets/img/menu/seasonings-640.webp"],
+    "altFiles": [
+      "assets/img/menu/seasonings-640.webp"
+    ],
     "sourcePlatform": "Pexels",
     "sourceAssetId": "11631717",
     "sourceName": "gökçe erem",
@@ -98,7 +110,9 @@
   {
     "assetId": "site-hero",
     "file": "assets/video/hero-poster.jpg",
-    "altFiles": ["assets/img/og-image.jpg"],
+    "altFiles": [
+      "assets/img/og-image.jpg"
+    ],
     "sourcePlatform": "Pexels",
     "sourceAssetId": "36101015",
     "sourceName": "Mohamed Olwy",
@@ -112,17 +126,18 @@
   },
   {
     "assetId": "site-about-counter",
-    "file": "assets/img/about-counter.webp",
+    "file": "assets/img/about-modern-butcher-counter.webp",
     "sourcePlatform": "Pexels",
-    "sourceAssetId": "14315452",
-    "sourceName": "Florencia Flores",
-    "sourcePageUrl": "https://www.pexels.com/photo/14315452/",
+    "sourceAssetId": "12884547",
+    "sourceName": "Dana Sredojevic",
+    "sourcePageUrl": "https://www.pexels.com/photo/12884547/",
     "licenseName": "Pexels License",
     "licensePageUrl": "https://www.pexels.com/license/",
     "licenseChecked": "2026-08-26",
     "requiresAttribution": false,
     "imageStatus": "representative",
-    "usageNotes": "Butcher-shop refrigerated display case."
+    "usageNotes": "Assorted premium beef cuts in a gourmet market display; no dominant shop signage after crop.",
+    "altFiles": []
   },
   {
     "assetId": "site-butcher-cut",
@@ -168,16 +183,16 @@
   },
   {
     "assetId": "site-counter-pantry",
-    "file": "assets/img/counter-pantry.webp",
+    "file": "assets/img/counter-gourmet-pantry.webp",
     "sourcePlatform": "Pexels",
-    "sourceAssetId": "13927674",
-    "sourceName": "Lada Rezantseva",
-    "sourcePageUrl": "https://www.pexels.com/photo/13927674/",
+    "sourceAssetId": "7262985",
+    "sourceName": "Sarah Chai",
+    "sourcePageUrl": "https://www.pexels.com/photo/7262985/",
     "licenseName": "Pexels License",
     "licensePageUrl": "https://www.pexels.com/license/",
     "licenseChecked": "2026-08-26",
     "requiresAttribution": false,
     "imageStatus": "representative",
-    "usageNotes": "Rustic store display with olive oil, pasta, eggs — gourmet goods concept."
+    "usageNotes": "Glass jars with pasta and dry goods on a wooden shelf; no alcohol or third-party branding."
   }
 ]

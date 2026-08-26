@@ -105,11 +105,11 @@ MENU.forEach((it, idx) => {
 // ---------- Site-level assets ----------
 const SITE_ASSETS = [
   ["assets/video/hero-poster.jpg", SIZE_LIMITS["assets/video/hero-poster.jpg"], "site-hero"],
-  ["assets/img/about-counter.webp", SIZE_LIMITS.default, "site-about"],
+  ["assets/img/about-modern-butcher-counter.webp", SIZE_LIMITS.default, "site-about"],
   ["assets/img/butcher-cut.webp", SIZE_LIMITS.default, "site-butcher"],
   ["assets/img/counter-steaks.webp", SIZE_LIMITS.default, "site-counter-steaks"],
   ["assets/img/counter-mixed.webp", SIZE_LIMITS.default, "site-counter-mixed"],
-  ["assets/img/counter-pantry.webp", SIZE_LIMITS.default, "site-counter-pantry"]
+  ["assets/img/counter-gourmet-pantry.webp", SIZE_LIMITS.default, "site-counter-pantry"]
 ];
 for (const [file, lim, label] of SITE_ASSETS) {
   checkFile(file, lim, label);
@@ -129,6 +129,23 @@ const html = readFileSync(path.join(root, "index.html"), "utf8");
 const refs = [...html.matchAll(/(?:src|href|poster)="(assets\/[^"]+\.(?:webp|jpe?g|png|svg|mp4))"/g)].map(m => m[1]);
 for (const ref of new Set(refs)) {
   if (!existsSync(path.join(root, ref))) err(`index.html references missing asset: ${ref}`);
+}
+
+// ---------- Deprecated asset references ----------
+const DEPRECATED = [
+  "assets/img/menu/ribs-640.webp",
+  "assets/img/menu/ribs-1200.webp",
+  "assets/img/about-counter.webp",
+  "assets/img/counter-pantry.webp"
+];
+for (const dep of DEPRECATED) {
+  const inHtml = html.includes(dep);
+  const inData = dataSrc.includes(dep);
+  if (inHtml || inData) err(`deprecated asset still referenced: ${dep} (${inHtml ? "index.html" : "menu-data.js"})`);
+}
+// runtime external image requests
+if (/https?:\/\/(images\.pexels|cdn\.pixabay|images\.unsplash)/.test(html)) {
+  err("index.html contains remote image hotlinks");
 }
 
 // ---------- Summary ----------

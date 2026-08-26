@@ -65,3 +65,10 @@ All synthetic imagery was replaced with licensed Pexels photography under the Pe
 (free for commercial use, no attribution required, no hotlinking). Full per-image records:
 `assets/data/image-credits.json`. All menu photos are marked `representative` ("Foto referensi")
 — none depict Indoguna's actual plating. Sources verified 2026-08-26.
+
+### S5 — Spending range (visible copy + priceRange support)
+
+- Source: Google Maps listing for this exact branch — "Rp 100.000–250.000 per person · reported by 158 people" (S2, same listing).
+- Date accessed: 2026-08-24
+- Confidence: medium (crowd-reported figure on the branch's own Google profile)
+- Used for: visible line "Kisaran pengeluaran Rp100.000–250.000 per orang · berdasarkan laporan pengunjung" and JSON-LD `priceRange`.
