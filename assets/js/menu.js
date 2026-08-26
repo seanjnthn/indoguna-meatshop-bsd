@@ -3,6 +3,7 @@
   "use strict";
   var MENU = window.INDOGUNA_MENU || [];
   var CATS = window.INDOGUNA_MENU_CATEGORIES || [{ id: "all", label: "All" }];
+  var TYPES = window.INDOGUNA_TYPE_LABELS || {};
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var root = document.getElementById("full-menu");
@@ -10,6 +11,7 @@
 
   var grid = document.getElementById("menuGrid");
   var search = document.getElementById("menuSearch");
+  var searchWrap = document.getElementById("menuSearchWrap");
   var clearBtn = document.getElementById("menuSearchClear");
   var countEl = document.getElementById("menuCount");
   var emptyEl = document.getElementById("menuEmpty");
@@ -26,26 +28,33 @@
 
   function priceHtml(item) {
     if (item.price != null && item.price > 0) return "Rp " + fmt.format(item.price);
-    if (item.priceLabel) return esc(item.priceLabel);
-    return "Harga dapat berubah — hubungi restoran";
+    return '<span class="price-note">' + esc(item.priceNote || "Hubungi restoran untuk harga terbaru") + "</span>";
   }
 
   function card(item) {
-    var badge =
-      item.imageStatus === "illustration"
-        ? '<span class="menu-badge">Ilustrasi</span>'
-        : item.imageStatus === "representative"
-        ? '<span class="menu-badge">Representatif</span>'
-        : "";
+    var badge = "";
+    if (item.imageStatus === "representative") {
+      badge =
+        '<span class="menu-badge" tabindex="0" aria-label="Foto menggambarkan jenis hidangan dan mungkin berbeda dari penyajian aktual">' +
+        "Foto referensi</span>";
+    } else if (item.imageStatus === "illustration") {
+      badge = '<span class="menu-badge">Ilustrasi</span>';
+    }
     var cat = CATS.filter(function (c) { return c.id === item.category; })[0];
+    var typeLabel = TYPES[item.type] || "";
+    var srcsetAttr = item.srcset ? ' srcset="' + esc(item.srcset) + '" sizes="(max-width:560px) 100vw, (max-width:1024px) 50vw, 33vw"' : "";
+    var pos = item.imagePosition ? ' style="object-position:' + esc(item.imagePosition) + '"' : "";
     return (
       '<article class="menu-card reveal in" data-id="' + esc(item.id) + '">' +
       '<div class="menu-card-media">' +
-      '<img src="' + esc(item.image) + '" alt="' + esc(item.imageAlt) + '" width="400" height="300" loading="lazy" decoding="async">' +
+      '<img src="' + esc(item.image) + '"' + srcsetAttr +
+      ' alt="' + esc(item.imageAlt) + '" width="1200" height="900" loading="lazy" decoding="async"' + pos + ">" +
       badge +
       "</div>" +
       '<div class="menu-card-body">' +
-      '<span class="menu-cat">' + esc(cat ? cat.label : item.category) + "</span>" +
+      '<div class="menu-meta"><span class="menu-cat">' + esc(cat ? cat.label : item.category) + "</span>" +
+      (typeLabel ? '<span class="menu-type">' + esc(typeLabel) + "</span>" : "") +
+      "</div>" +
       "<h3>" + esc(item.name) + "</h3>" +
       '<p class="menu-desc">' + esc(item.description) + "</p>" +
       '<p class="menu-price">' + priceHtml(item) + "</p>" +
@@ -67,12 +76,17 @@
   function render() {
     var items = MENU.filter(matches);
     grid.innerHTML = items.map(card).join("");
-    countEl.textContent = items.length === 1
-      ? "1 item"
-      : items.length + " items";
+    if (items.length === 0) {
+      countEl.textContent = "Tidak ada menu yang cocok";
+    } else {
+      countEl.textContent = items.length + " pilihan";
+    }
     emptyEl.hidden = items.length !== 0;
     grid.hidden = items.length === 0;
   }
+
+  /* Progressive disclosure: hide search below 9 items; keep implementation intact */
+  if (MENU.length < 9 && searchWrap) searchWrap.hidden = true;
 
   /* Category tabs */
   tablist.innerHTML = CATS.map(function (c, i) {
@@ -116,7 +130,7 @@
     }
   });
 
-  /* Search */
+  /* Search (preserved; hidden when MENU < 9) */
   var debounce;
   search.addEventListener("input", function () {
     clearTimeout(debounce);
@@ -166,21 +180,42 @@
   var toggle = document.querySelector(".nav-toggle");
   var drawer = document.getElementById("mobileNav");
   if (toggle && drawer) {
+    var lastFocus = null;
     function setNav(open) {
       drawer.classList.toggle("open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      document.body.style.overflow = open ? "hidden" : "";
+      if (open) {
+        lastFocus = document.activeElement;
+        var firstLink = drawer.querySelector("a");
+        if (firstLink) firstLink.focus();
+      } else if (lastFocus) {
+        lastFocus.focus();
+      }
     }
     toggle.addEventListener("click", function () {
       setNav(!drawer.classList.contains("open"));
     });
     drawer.addEventListener("click", function (e) {
       if (e.target.tagName === "A") setNav(false);
+      /* outside click handled on document below */
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && drawer.classList.contains("open")) {
         setNav(false);
         toggle.focus();
+      }
+    });
+    /* Close when clicking outside the drawer */
+    document.addEventListener("click", function (e) {
+      if (
+        drawer.classList.contains("open") &&
+        !drawer.contains(e.target) &&
+        !toggle.contains(e.target)
+      ) {
+        setNav(false);
       }
     });
   }

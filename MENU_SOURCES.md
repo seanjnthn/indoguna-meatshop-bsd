@@ -58,3 +58,10 @@ The following describe other branches of the same brand. Per content rules they 
 3. The full current restaurant menu — the branch's own Google "Menu" photos and any printed menu should be photographed/obtained directly from the restaurant to extend `menu-data.js`.
 4. Whether delivery platforms (GoFood/GrabFood/ShopeeFood) carry the BSD branch under a different listing name.
 5. Exact appearance/plating of each dish for replacing illustration images with real photographs (see IMAGE_SEARCH_QUERIES.md).
+
+## Image provenance (added 2026-08-26)
+
+All synthetic imagery was replaced with licensed Pexels photography under the Pexels License
+(free for commercial use, no attribution required, no hotlinking). Full per-image records:
+`assets/data/image-credits.json`. All menu photos are marked `representative` ("Foto referensi")
+— none depict Indoguna's actual plating. Sources verified 2026-08-26.

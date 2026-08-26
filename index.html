@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Indoguna Meatshop &amp; Gourmet BSD — Premium Steakhouse &amp; Butcher Shop</title>
-<meta name="description" content="Indoguna Meatshop & Gourmet BSD at The Icon, Cisauk — dine on fresh premium steaks and shop quality meats, imported seasonings and gourmet goods. Open daily 08.30–21.00. Call (021) 30305524.">
+<meta name="description" content="Indoguna Meatshop &amp; Gourmet BSD di The Icon BSD City — restoran steak dan butcher shop daging premium. Nikmati steak segar dari grill, layanan masak potongan pilihan, dan belanja di gourmet counter. Buka setiap hari 08.30–21.00. Telepon (021) 30305524.">
 <link rel="canonical" href="https://seanjnthn.github.io/indoguna-meatshop-bsd/">
 <meta name="theme-color" content="#140d08">
 <!-- Open Graph -->
 <meta property="og:type" content="restaurant">
 <meta property="og:title" content="Indoguna Meatshop & Gourmet BSD">
-<meta property="og:description" content="Fresh premium steaks, butcher-quality cuts and gourmet goods at The Icon, BSD City. Dine in · Takeaway · Shop the counter.">
+<meta property="og:description" content="Steak segar, potongan daging premium, dan barang gourmet di The Icon BSD City. Makan di tempat · Bawa pulang · Belanja di counter.">
 <meta property="og:url" content="https://seanjnthn.github.io/indoguna-meatshop-bsd/">
 <meta property="og:image" content="https://seanjnthn.github.io/indoguna-meatshop-bsd/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="id_ID">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Indoguna Meatshop & Gourmet BSD">
-<meta name="twitter:description" content="Fresh premium steaks, butcher-quality cuts and gourmet goods at The Icon, BSD City.">
+<meta name="twitter:description" content="Steak segar, potongan daging premium, dan barang gourmet di The Icon BSD City.">
 <meta name="twitter:image" content="https://seanjnthn.github.io/indoguna-meatshop-bsd/assets/img/og-image.jpg">
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/img/favicon-32.png">
-<link rel="preload" as="image" href="assets/video/hero-poster.jpg" media="(max-width: 768px)">
+<link rel="preload" as="image" href="assets/video/hero-poster.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400..700;1,400..700&family=Manrope:wght@400;600;700;800&display=swap">
+
 <link rel="stylesheet" href="assets/css/menu.css">
 <script src="assets/data/menu-data.js"></script>
 <script type="application/ld+json">
@@ -32,6 +36,7 @@
   "@type": "Restaurant",
   "name": "Indoguna Meatshop & Gourmet BSD",
   "servesCuisine": ["Steak", "Western", "Gourmet"],
+  "inLanguage": "id-ID",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "The Icon Blok M1 No. 22, Sampora, Cisauk",
@@ -44,7 +49,6 @@
   "telephone": "+62-21-30305524",
   "priceRange": "Rp 100.000–250.000",
   "image": "https://seanjnthn.github.io/indoguna-meatshop-bsd/assets/img/og-image.jpg",
-  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.5", "reviewCount": "507" },
   "hasMenu": {
     "@type": "Menu",
     "name": "Indoguna Meatshop & Gourmet BSD Menu",
@@ -62,7 +66,7 @@
         "@type": "MenuSection",
         "name": "Steak Service",
         "hasMenuItem": [
-          { "@type": "MenuItem", "name": "Cook Your Cut Service", "description": "Pick any cut from the retail counter and have the kitchen grill it for you, including side dish and complements. Cooking surcharge approx. Rp 60.000 (reported by Side.id; confirm current rate with the restaurant)." }
+          { "@type": "MenuItem", "name": "Cook Your Cut Service", "description": "Pick any cut from the retail counter and have the kitchen grill it for you, including side dish and complements. Cooking charge may change - please confirm with the restaurant." }
         ]
       }
     ]
@@ -371,25 +375,22 @@ footer{
 
 <header class="hero" id="top">
   <div class="hero-media" aria-hidden="true">
-    <video id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg">
-      <source src="assets/video/hero-loop.mp4" type="video/mp4">
-    </video>
-    <img id="heroFallback" src="assets/video/hero-poster.jpg" alt="" style="position:absolute;inset:0;display:none">
+    <img src="assets/video/hero-poster.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" id="heroStill">
   </div>
   <div class="hero-inner">
     <span class="kicker">Steakhouse &middot; Butcher Shop &middot; BSD City</span>
     <h1>Cut fresh.<br>Sear to <em>perfection.</em></h1>
     <p class="sub">Dine on premium steaks straight off the grill — then take the same butcher-quality cuts, imported sauces and gourmet staples home from the counter.</p>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="#menu">Explore the counter
+      <a class="btn btn-primary" href="#full-menu">Lihat pilihan menu
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=Indoguna+Meatshop+%26+Gourmet+BSD+The+Icon+Cisauk" target="_blank" rel="noopener">Get directions</a>
     </div>
   </div>
   <div class="hero-meta" role="presentation">
-    <strong>Google rating 4.5 ★</strong>
-    <span class="stars">★★★★★ <span style="letter-spacing:0;color:rgba(243,234,217,.6)">· 507 reviews</span></span>
+    <strong>4.5 di Google</strong>
+    <span class="stars">★★★★★</span>
     <span>Open daily · 08.30 – 21.00</span>
   </div>
   <div class="scroll-hint" aria-hidden="true"></div>
@@ -405,16 +406,44 @@ footer{
       <p>Backed by Indoguna's long-standing food-supply heritage, the kitchen and the butchery work side by side — so steaks arrive at your table at their freshest, alongside sausages, cold cuts, seafood, dairy and imported seasonings.</p>
       <p><strong>Guests love that you can eat well and shop well in one visit</strong> — pick your cut at the display, have it cooked to order, then stock up for your own kitchen before you leave.</p>
       <div class="fact-row">
-        <div class="fact"><b>4.5★</b><span>507 Google reviews</span></div>
+        <div class="fact"><b>4.5★</b><span>Rating di Google</span></div>
         <div class="fact"><b>08.30–21.00</b><span>Open every day</span></div>
         <div class="fact"><b>Dine-in · Takeaway</b><span>& shop the counter</span></div>
       </div>
     </div>
     <div class="about-imgs reveal" data-parallax-scene>
-      <img class="para para-a" src="assets/img/about-counter.jpg" alt="Warm interior of the meatshop with a glass display counter of fresh premium beef cuts" loading="lazy" data-depth="0.12">
-      <img class="para para-b" src="assets/img/butcher-cut.jpg" alt="Butcher slicing a fresh premium beef cut on a wooden block" loading="lazy" data-depth="-0.08">
-      <div class="badge-rating para" data-depth="0.05"><b>4.5★</b><span>on Google</span></div>
+      <img class="para para-a" src="assets/img/about-counter.webp" alt="Fresh cuts of meat displayed in a well-lit butcher shop refrigerator case" width="900" height="1100" loading="lazy" decoding="async" data-depth="0.12">
+      <img class="para para-b" src="assets/img/butcher-cut.webp" alt="Butcher in gloves trimming meat during preparation" width="860" height="645" loading="lazy" decoding="async" data-depth="-0.08">
+      <div class="badge-rating para" data-depth="0.05"><b>4.5★</b><span>di Google</span></div>
     </div>
+  </div>
+</section>
+
+<section class="full-menu" id="full-menu" aria-labelledby="fullMenuTitle">
+  <div class="wrap">
+    <span class="sec-label reveal in">Pilihan Menu</span>
+    <h2 class="sec-title reveal in" id="fullMenuTitle">Pilihan dari grill &amp; counter</h2>
+    <p style="margin-top:18px;max-width:56ch;color:rgba(243,234,217,.75)">Pilihan berikut berasal dari informasi publik yang berhasil diverifikasi. Menu, harga, dan ketersediaan dapat berubah.</p>
+    <div class="menu-toolbar">
+      <div class="menu-search" id="menuSearchWrap">
+        <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <label for="menuSearch" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Cari menu</label>
+        <input type="search" id="menuSearch" placeholder="Cari menu… (mis. ribs, wagyu, sosis)" autocomplete="off">
+        <button class="menu-clear" id="menuSearchClear" hidden aria-label="Hapus pencarian">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div class="menu-tabs" id="menuTabs" role="tablist" aria-label="Kategori menu"></div>
+        <p class="menu-count" id="menuCount" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+    <div class="menu-empty" id="menuEmpty" hidden>
+      <b>Tidak ada menu yang cocok</b>
+      Try a different keyword — for example "steak", "lamb", "saus" or "wagyu".
+    </div>
+    <p class="menu-disclaimer">Pilihan berikut berasal dari informasi publik yang berhasil diverifikasi. Menu, harga, dan ketersediaan dapat berubah. Foto bertanda &ldquo;Foto referensi&rdquo; menggambarkan jenis hidangan dan mungkin berbeda dari penyajian aktual. Hubungi restoran untuk informasi terbaru.</p>
   </div>
 </section>
 
@@ -428,15 +457,15 @@ footer{
     </div>
     <div class="dish-grid">
       <article class="dish reveal">
-        <img src="assets/img/dish-steak.jpg" alt="Thick angus ribeye searing over glowing embers" loading="lazy">
+        <img src="assets/img/counter-steaks.webp" alt="Grilled beef steak garnished with herbs on a wooden plate" width="1000" height="750" loading="lazy" decoding="async">
         <div class="dish-cap"><span class="dish-tag">Grill favourite</span><h3>Fresh-Cut Steaks</h3><p>Pick your cut at the counter — sirloin, ribeye and more — seared to order.</p></div>
       </article>
       <article class="dish reveal">
-        <img src="assets/img/dish-grill.jpg" alt="Sausages and lamb chops grilling over charcoal" loading="lazy">
+        <img src="assets/img/counter-mixed.webp" alt="Rustic barbecue platter filled with assorted grilled meats" width="1000" height="750" loading="lazy" decoding="async">
         <div class="dish-cap"><span class="dish-tag">Off the coals</span><h3>Sausages &amp; Chops</h3><p>House sausages, lamb chops and grilled sides from the same embers.</p></div>
       </article>
       <article class="dish reveal">
-        <img src="assets/img/dish-board.jpg" alt="Sliced medium-rare steak fanned on dark slate with rosemary and garlic" loading="lazy">
+        <img src="assets/img/counter-pantry.webp" alt="Rustic store display with olive oil, pasta and gourmet goods" width="1000" height="750" loading="lazy" decoding="async">
         <div class="dish-cap"><span class="dish-tag">Butcher's board</span><h3>Gourmet Goods</h3><p>Cold cuts, marinades, imported sauces and pantry staples to take home.</p></div>
       </article>
     </div>
@@ -447,41 +476,13 @@ footer{
   </div>
 </section>
 
-<section class="full-menu" id="full-menu" aria-labelledby="fullMenuTitle">
-  <div class="wrap">
-    <span class="sec-label reveal in">Full Menu</span>
-    <h2 class="sec-title reveal in" id="fullMenuTitle">Explore our menu</h2>
-    <p style="margin-top:18px;max-width:56ch;color:rgba(243,234,217,.75)">Guest favourites from the grill, the cook-your-cut service, and what to pick up from the retail counter — search or filter below.</p>
-    <div class="menu-toolbar">
-      <div class="menu-search">
-        <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <label for="menuSearch" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search the menu</label>
-        <input type="search" id="menuSearch" placeholder="Search menu… (e.g. ribs, wagyu, sausage)" autocomplete="off">
-        <button class="menu-clear" id="menuSearchClear" hidden aria-label="Clear search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
-        <div class="menu-tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
-        <p class="menu-count" id="menuCount" role="status" aria-live="polite"></p>
-      </div>
-    </div>
-    <div class="menu-grid" id="menuGrid"></div>
-    <div class="menu-empty" id="menuEmpty" hidden>
-      <b>Nothing matches your search</b>
-      Try a different keyword — for example "steak", "lamb", "saus" or "wagyu".
-    </div>
-    <p class="menu-disclaimer">Menu, availability, and prices may change. Please contact the restaurant for the latest information. Images marked &ldquo;Ilustrasi&rdquo; are illustrative renderings, not photographs of the actual dishes.</p>
-  </div>
-</section>
-
 <section class="reviews" id="reviews">
   <div class="wrap">
     <div class="rating-summary reveal">
       <b>4.5</b>
       <div>
         <span class="stars" style="font-size:1.15rem">★★★★★</span>
-        <p style="color:var(--smoke);font-size:.9rem">Based on 507 Google reviews</p>
+        <p style="color:var(--smoke);font-size:.9rem">4.5 di Google</p>
       </div>
     </div>
     <div class="review-grid">
@@ -520,7 +521,7 @@ footer{
           <div data-day="6"><span>Saturday</span><span>08.30 – 21.00</span></div>
           <div data-day="0"><span>Sunday</span><span>08.30 – 21.00</span></div>
         </div>
-        <span class="open-pill" id="openPill">Open now</span>
+        <span class="open-pill" id="openPill">Buka sekarang</span>
         <p style="margin-top:14px;font-size:.85rem;color:var(--smoke)">Typical spend Rp 100.000–250.000 per person · reported by guests</p>
       </div>
       <div class="addr-card reveal">
@@ -590,7 +591,7 @@ footer{
       <h4>Good to know</h4>
       <a href="#menu">Dine-in · Takeaway · Retail counter</a>
       <a href="#visit">Open daily 08.30 – 21.00</a>
-      <a href="#reviews">Rated 4.5★ by 507 guests</a>
+      <a href="#reviews">Rating 4.5★ di Google</a>
     </div>
   </div>
   <div class="foot-bottom">
@@ -626,7 +627,7 @@ footer{
   /* Multi-layer transform parallax (rAF-throttled, mobile-safe) */
   if (!reduced) {
     var layers = [].slice.call(document.querySelectorAll('[data-depth]'));
-    var hero = document.querySelector('.hero-media video') || document.querySelector('.hero-media img');
+    var hero = document.querySelector('.hero-media img');
     var ticking = false;
     function apply(){
       ticking = false;
@@ -651,30 +652,33 @@ footer{
     apply();
   }
 
-  /* Hours: highlight today + live open/closed pill */
+  /* Hours: highlight today + live open/closed pill (Asia/Jakarta) */
   try {
-    var now = new Date();
-    var day = now.getDay(); /* 0 Sun .. 6 Sat */
+    var fmtParts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Jakarta',
+      weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false
+    });
+    var parts = {};
+    fmtParts.formatToParts(new Date()).forEach(function(pt){ parts[pt.type] = pt.value; });
+    var dayMap = { Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6, Sun:0 };
+    var day = dayMap[parts.weekday];
+    var mins = (parseInt(parts.hour,10) % 24) * 60 + parseInt(parts.minute,10);
     var row = document.querySelector('#hoursTable [data-day="' + day + '"]');
     if (row) row.classList.add('today');
-    var mins = now.getHours()*60 + now.getMinutes();
-    var open = 8*60+30, close = 21*60;
+    var openMins = 8*60+30, closeMins = 21*60;
     var pill = document.getElementById('openPill');
-    if (mins >= open && mins < close) {
-      pill.textContent = 'Open now';
-    } else {
-      pill.textContent = 'Closed now · opens 08.30';
-      pill.style.color = '#d98a7a';
-      pill.style.setProperty('--x','x');
-      pill.classList.remove('open-pill');
-      pill.classList.add('open-pill');
-      pill.innerHTML = 'Closed now · opens 08.30';
-      pill.style.animation = 'none';
-      var dot = document.createElement('span'); dot.className='dot-off';
-      pill.insertBefore(dot, pill.firstChild);
+    if (pill) {
+      if (mins >= openMins && mins < closeMins) {
+        pill.textContent = 'Buka sekarang';
+      } else {
+        pill.textContent = 'Tutup · buka kembali pukul 08.30';
+        pill.style.color = '#d98a7a';
+        pill.style.animation = 'none';
+      }
     }
   } catch(e){}
 })();
+
 </script>
 <script src="assets/js/menu.js" defer></script>
 </body>
