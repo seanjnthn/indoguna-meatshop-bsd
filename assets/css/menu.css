@@ -189,6 +189,8 @@ body.hero-loaded .hero-title .line-in{transform:translateY(0)}
   will-change:transform,opacity;
 }
 .about{position:relative;overflow:hidden}
+html,body{overflow-x:clip}
+.ember-glow{contain:strict}
 .about .wrap{position:relative;z-index:1}
 
 /* --- Mobile sticky action bar --- */
@@ -276,3 +278,162 @@ img.img-reveal.img-loaded{opacity:1}
 .mobile-nav:not(.open){opacity:0;transform:translateY(-8px);pointer-events:none}
 .mobile-nav.open{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.mobile-nav{transition:none}}
+
+/* ============================================================
+   V3 — EMBER LIQUID GLASS
+   Material tokens + selective glass surfaces.
+   Glass = functional layer (nav, controls, drawers, islands).
+   Content stays editorial. Not everything gets glass.
+   ============================================================ */
+:root{
+  --glass-clear: rgba(28,23,18,.34);
+  --glass-regular: rgba(24,19,14,.52);
+  --glass-strong: rgba(20,15,11,.72);
+
+  --glass-border: rgba(255,245,230,.14);
+  --glass-border-strong: rgba(255,245,230,.22);
+  --glass-highlight: rgba(255,255,255,.16);
+  --glass-highlight-soft: rgba(255,255,255,.08);
+  --glass-ember: rgba(232,149,47,.16);
+  --glass-ember-strong: rgba(232,149,47,.30);
+  --glass-shadow: 0 20px 60px rgba(0,0,0,.28);
+  --glass-inner-highlight: inset 0 1px 0 rgba(255,255,255,.13);
+  --glass-blur-clear: 14px;
+  --glass-blur-regular: 20px;
+  --glass-blur-strong: 28px;
+
+  --radius-xs:10px; --radius-sm:14px; --radius-md:18px;
+  --radius-lg:26px; --radius-pill:999px;
+
+  --mx:50%; --my:50%;
+}
+
+/* Base glass material (progressive enhancement) */
+.glass{
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-inner-highlight), var(--glass-shadow);
+}
+.filter-indicator{position:relative}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .glass{ -webkit-backdrop-filter:blur(var(--glass-blur-regular)) saturate(135%); backdrop-filter:blur(var(--glass-blur-regular)) saturate(135%); }
+  .glass--clear{ background:
+    linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.025) 42%, rgba(232,149,47,.04)),
+    var(--glass-clear); }
+  .glass--regular{ background:
+    linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.025) 42%, rgba(232,149,47,.04)),
+    var(--glass-regular); }
+  .glass--strong{ -webkit-backdrop-filter:blur(var(--glass-blur-strong)) saturate(130%); backdrop-filter:blur(var(--glass-blur-strong)) saturate(130%);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02) 46%, rgba(232,149,47,.05)),
+      var(--glass-strong);
+    border-color:var(--glass-border-strong); }
+}
+/* Fallback: opaque smoked surface, never a broken transparent rect */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .glass--clear{ background:#221b13; }
+  .glass--regular{ background:#201a12; }
+  .glass--strong{ background:#1c1610; }
+}
+/* Reduced transparency preference */
+@media (prefers-reduced-transparency: reduce){
+  .glass--clear,.glass--regular{background:#241d15!important}
+  .glass--strong{background:#1e1811!important}
+  .glass{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-color:rgba(255,245,230,.2)}
+}
+
+/* Pointer-responsive liquid highlight (desktop only, rAF-throttled JS) */
+@media (hover:hover) and (pointer:fine){
+  .glass-lit::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.12), transparent 36%);
+    opacity:0;transition:opacity .35s ease;
+  }
+  .glass-lit:hover::after{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.glass-lit::after{display:none}}
+
+/* ===== V3: menu liquid control surface ===== */
+.menu-toolbar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:var(--radius-lg);
+}
+.menu-tabs{position:relative;padding:2px 0;max-width:100%}
+.menu-tab{border-color:transparent;background:transparent}
+.menu-tab[aria-selected="true"]{
+  background:linear-gradient(135deg, rgba(255,213,150,.30), rgba(232,149,47,.12)),
+            var(--glass-ember-strong);
+  border-color:rgba(232,149,47,.6);color:#ffe9c9;
+}
+
+/* Liquid active indicator (shared pill morphing between tabs) */
+.filter-indicator{
+  position:absolute;top:-1px;height:calc(100% + 2px);
+  border-radius:999px;
+  background:linear-gradient(135deg, rgba(255,213,150,.30), rgba(232,149,47,.12)),
+            var(--glass-ember-strong);
+  border:1px solid rgba(232,149,47,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 8px 22px -10px rgba(232,149,47,.45);
+  transition:left .38s cubic-bezier(.22,1,.36,1), width .38s cubic-bezier(.22,1,.36,1);
+  pointer-events:none;z-index:0;
+}
+.menu-tab{position:relative;z-index:1;transition:color .25s ease,border-color .25s ease}
+@media (prefers-reduced-motion:reduce){.filter-indicator{transition:none}}
+
+/* search inside glass toolbar */
+.menu-search{flex:1;min-width:min(320px,100%)}
+.menu-search input{background:transparent;border-color:var(--glass-border)}
+
+/* ===== V3: drawer → smoked glass sheet ===== */
+.mobile-nav{
+  background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(232,149,47,.04) 60%), var(--glass-strong);
+  border-radius:var(--radius-lg);
+  border:1px solid var(--glass-border-strong);
+  box-shadow:var(--glass-inner-highlight), 0 30px 80px -20px rgba(0,0,0,.7);
+  transform:translateY(18px) scale(.985);
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .mobile-nav{-webkit-backdrop-filter:blur(var(--glass-blur-strong)) saturate(130%);backdrop-filter:blur(var(--glass-blur-strong)) saturate(130%)}
+}
+@media (prefers-reduced-transparency: reduce){.mobile-nav{background:#241d15}}
+
+/* ===== V3: mobile sticky island — liquid glass ===== */
+.mobile-action-bar{
+  padding:8px;border-radius:var(--radius-pill);
+  background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02) 50%, rgba(232,149,47,.05)),
+            var(--glass-regular);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-inner-highlight), var(--glass-shadow);
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .mobile-action-bar{-webkit-backdrop-filter:blur(var(--glass-blur-strong)) saturate(135%);backdrop-filter:blur(var(--glass-blur-strong)) saturate(135%)}
+}
+@media (prefers-reduced-transparency: reduce){
+  .mobile-action-bar{background:#26201a;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}
+/* island forms as ONE material */
+.mobile-action-bar.mab-show{
+  transform:translateY(0) scale(1);opacity:1;
+  transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .4s ease;
+}
+.mobile-action-bar:not(.mab-show){
+  transform:translateY(calc(100% + 32px)) scale(.97);
+}
+.mab-item{border-radius:var(--radius-pill)}
+.mab-item[aria-current="true"],.mab-primary{
+  background:linear-gradient(135deg, rgba(255,213,150,.30), rgba(232,149,47,.12)), var(--glass-ember-strong);
+  color:#ffe9c9;
+}
+
+/* ===== V3: review cards get glass capsule header only; cards stay dark editorial ===== */
+.quote-card{background:var(--char-2)}
+
+/* ===== V3: menu card price badge = small glass pill ===== */
+.menu-price .price-note{
+  display:inline-block;padding:6px 12px;border-radius:999px;
+  background:var(--glass-clear);
+  border:1px solid var(--glass-border);
+  font-size:.76rem;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .menu-price .price-note{-webkit-backdrop-filter:blur(var(--glass-blur-clear));backdrop-filter:blur(var(--glass-blur-clear))}
+}

@@ -108,12 +108,19 @@ a{color:inherit}
 
 /* ===== NAV ===== */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px clamp(20px,5vw,64px);
-  transition:background .35s ease,padding .35s ease;
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);
+  width:min(1180px,calc(100% - 24px));
+  z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:12px clamp(16px,2.6vw,28px);
+  border-radius:var(--radius-pill);
+  transition:padding .45s cubic-bezier(.22,1,.36,1),box-shadow .45s cubic-bezier(.22,1,.36,1);
 }
-nav.scrolled{background:rgba(20,16,11,.88);backdrop-filter:blur(12px);padding-top:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+/* hero state: clear glass */
+nav.glass{--glass-blur-regular:var(--glass-blur-clear)}
+nav.scrolled{
+  padding-top:8px;padding-bottom:8px;
+  box-shadow:0 22px 54px -18px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.15);
+}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .brand svg{width:38px;height:38px}
 .nav-links{display:flex;gap:clamp(14px,2.5vw,34px);align-items:center}
@@ -177,7 +184,17 @@ nav.scrolled{background:rgba(20,16,11,.88);backdrop-filter:blur(12px);padding-to
   transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s;
   cursor:pointer;border:none;
 }
-.btn-primary{background:var(--ember);color:#1c1206}
+.btn-primary{
+  background:
+    linear-gradient(135deg, rgba(255,213,150,.32), rgba(232,149,47,.10) 55%),
+    rgba(232,149,47,.34);
+  color:#ffe9c9;
+  border:1px solid rgba(232,149,47,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 10px 30px -12px rgba(232,149,47,.5);
+  text-shadow:0 1px 2px rgba(20,10,0,.4);
+}
+.btn-primary:hover{border-color:rgba(232,149,47,.85);transform:translateY(-2px)}
+.btn-primary:active{transform:scale(.98)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px -8px rgba(232,149,47,.55)}
 .btn-ghost{border:1px solid rgba(243,234,217,.35);color:var(--cream)}
 .btn-ghost:hover{border-color:var(--ember);color:var(--ember);transform:translateY(-2px)}
@@ -345,7 +362,7 @@ footer{
 </head>
 <body>
 
-<nav id="nav" aria-label="Main">
+<nav id="nav" aria-label="Main" class="glass glass--regular glass-lit">
   <a class="brand" href="#top" aria-label="Indoguna Meatshop home">
     <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
       <circle cx="24" cy="24" r="22.5" stroke="#e8952f" stroke-width="1.6"/>
@@ -819,6 +836,92 @@ footer{
 })();
 </script>
 <script src="assets/js/analytics.js" defer></script>
+<script>
+
+/* ===== V3 — Ember Liquid Glass behaviors ===== */
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Liquid filter indicator (morphs between tabs) */
+  (function(){
+    var tablist = document.getElementById('menuTabs');
+    if (!tablist || reduced) return;
+
+    function ensureIndicator(){
+      var ind = tablist.querySelector('.filter-indicator');
+      if (!ind){
+        ind = document.createElement('span');
+        ind.className = 'filter-indicator';
+        ind.setAttribute('aria-hidden','true');
+        tablist.appendChild(ind);
+      }
+      return ind;
+    }
+    function activeBtn(){
+      return tablist.querySelector('[aria-selected="true"]');
+    }
+    function move(){
+      var ind = ensureIndicator();
+      var btn = activeBtn();
+      if (!btn){ ind.style.width = '0px'; return; }
+      requestAnimationFrame(function(){
+        var tl = tablist.getBoundingClientRect();
+        var br = btn.getBoundingClientRect();
+        if (br.width === 0) return;
+        ind.style.left = Math.round(br.left - tl.left) + 'px';
+        ind.style.width = Math.round(br.width) + 'px';
+      });
+    }
+    /* wait until menu.js has built the tabs, then attach */
+    function boot(){
+      if (!tablist.querySelector('[role=tab]')){ setTimeout(boot, 120); return; }
+      move();
+      tablist.addEventListener('click', function(){ setTimeout(move, 30); });
+      window.addEventListener('resize', move, {passive:true});
+      tablist.addEventListener('scroll', move, {passive:true});
+      /* safety re-check after load (fonts shift widths) */
+      window.addEventListener('load', function(){ setTimeout(move, 200); });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+  })();
+
+  /* 2. Pointer lighting on glass surfaces (desktop, rAF-throttled, few elements) */
+  if (!reduced && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    var litEls = [].slice.call(document.querySelectorAll('.glass-lit'));
+    var pending = false;
+    litEls.forEach(function(el){
+      el.addEventListener('pointermove', function(ev){
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(function(){
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', ((ev.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+          el.style.setProperty('--my', ((ev.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+          pending = false;
+        });
+      }, {passive:true});
+    });
+  }
+
+  /* 3. Navbar hero/content glass state (class morph only) */
+  var nav = document.getElementById('nav');
+  var nTick = false;
+  function navState(){
+    nTick = false;
+    if (!nav) return;
+    var past = window.scrollY > window.innerHeight * 0.6;
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    nav.classList.toggle('glass--strong', past);
+    nav.classList.toggle('glass--regular', !past);
+  }
+  window.addEventListener('scroll', function(){
+    if (!nTick){ nTick = true; requestAnimationFrame(navState); }
+  }, {passive:true});
+  navState();
+})();
+
+</script>
 <script src="assets/js/menu.js" defer></script>
 </body>
 </html>
