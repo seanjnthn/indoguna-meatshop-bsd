@@ -118,3 +118,132 @@
 @media (prefers-reduced-motion:reduce){
   .menu-card,.menu-card:hover{transition:none;transform:none}
 }
+
+/* ============================================================
+   V2 MOTION SYSTEM — cinematic, restrained, GPU-friendly
+   ============================================================ */
+:root{
+  --ease-cine:cubic-bezier(.22,1,.36,1);
+  --dur-slow:.9s;
+  --dur-mid:.7s;
+}
+
+/* --- Hero intro sequence --- */
+.hero-media img{
+  transform:scale(1.045);
+  transition:transform 1.6s var(--ease-cine);
+}
+body.hero-loaded .hero-media img{transform:scale(1)}
+.hero-intro{
+  opacity:0;
+  transform:translateY(26px);
+  transition:
+    opacity var(--dur-slow) var(--ease-cine) var(--d,0s),
+    transform var(--dur-slow) var(--ease-cine) var(--d,0s);
+}
+body.hero-loaded .hero-intro{opacity:1;transform:none}
+.hero-title{display:flex;flex-direction:column;overflow:hidden}
+.hero-title .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.hero-title .line-in{
+  display:block;transform:translateY(110%);
+  transition:transform 1.05s var(--ease-cine) var(--d,0s);
+}
+body.hero-loaded .hero-title .line-in{transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  .hero-media img{transform:none;transition:none}
+  .hero-intro{opacity:1;transform:none;transition:none}
+  .hero-title .line-in{transform:none;transition:none}
+}
+
+/* --- Hero scroll scene (JS adds .hero-scrolled on header) --- */
+.hero-inner,.hero-meta{will-change:transform,opacity}
+@media (prefers-reduced-motion:reduce){
+  .hero-inner,.hero-meta{transform:none!important;opacity:1!important}
+}
+
+/* --- Editorial reveal primitives (masked lines / clip reveals) --- */
+.rv-line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.rv-line>span{display:block;transform:translateY(115%);transition:transform .95s var(--ease-cine) var(--d,0s)}
+.rv-in .rv-line>span{transform:translateY(0)}
+.rv-clip{clip-path:inset(12% 4% 14% 4% round 14px);transition:clip-path 1.15s var(--ease-cine) var(--d,0s),transform 1.15s var(--ease-cine) var(--d,0s)}
+.rv-clip.rv-go{clip-path:inset(0 0 0 0 round 14px)}
+.rv-fade{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease-cine) var(--d,0s),transform .8s var(--ease-cine) var(--d,0s)}
+.rv-fade.rv-go{opacity:1;transform:none}
+
+/* About images keep parallax via existing data-depth (JS-driven) */
+.about-imgs .para-a{--rv-delay:.05s}
+.about-imgs .para-b{--rv-delay:.22s}
+@media (prefers-reduced-motion:reduce){
+  .rv-line>span{transform:none;transition:none}
+  .rv-clip{clip-path:none;transition:none}
+  .rv-fade{opacity:1;transform:none;transition:none}
+}
+
+/* --- Ember ambient glow (About background) --- */
+.ember-glow{
+  position:absolute;inset:-20% -10%;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(42% 38% at 78% 30%, rgba(232,149,47,.16), transparent 70%),
+    radial-gradient(36% 34% at 12% 75%, rgba(201,111,26,.11), transparent 72%);
+  filter:blur(60px);
+  will-change:transform,opacity;
+}
+.about{position:relative;overflow:hidden}
+.about .wrap{position:relative;z-index:1}
+
+/* --- Mobile sticky action bar --- */
+.mobile-action-bar{
+  position:fixed;left:14px;right:14px;
+  bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  z-index:90;display:none;
+  grid-template-columns:1fr 1fr 1fr;gap:6px;
+  padding:8px;border-radius:20px;
+  background:rgba(24,19,13,.92);
+  border:1px solid rgba(232,149,47,.28);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:0 18px 44px -14px rgba(0,0,0,.65);
+  transform:translateY(calc(100% + 32px));
+  opacity:0;
+  transition:transform .55s var(--ease-cine),opacity .45s ease;
+  pointer-events:none;
+}
+.mobile-action-bar.mab-show{transform:translateY(0);opacity:1;pointer-events:auto}
+.mab-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  min-height:52px;padding:8px 4px;border-radius:14px;
+  color:rgba(243,234,217,.82);text-decoration:none;
+  font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  transition:background .25s,color .25s;
+}
+.mab-item svg{width:20px;height:20px}
+.mab-item:active{background:rgba(232,149,47,.14)}
+.mab-primary{
+  background:var(--ember);color:#1c1206;
+}
+.mab-primary:active{background:var(--ember-deep)}
+.mab-item:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+@media (max-width:720px){.mobile-action-bar{display:grid}}
+@media (min-width:721px){.mobile-action-bar{display:none}}
+
+/* body bottom padding so bar never covers footer content on mobile */
+@media (max-width:720px){
+  footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+}
+
+/* --- Global focus-visible polish --- */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--ember);
+  outline-offset:3px;
+  border-radius:6px;
+}
+.btn:focus-visible{border-radius:999px}
+
+/* --- Rhythm & readability refinements --- */
+section{padding-block:clamp(84px,12vh,150px)}
+.wrap p{max-width:62ch}
+.menu-desc,.dish-cap p,.about-copy p{max-width:58ch}
+.btn{will-change:transform}
+.btn:active{transform:translateY(0) scale(.985)}
+@media (hover:hover){
+  .menu-card{cursor:default}
+}

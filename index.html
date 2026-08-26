@@ -385,26 +385,21 @@ footer{
     <img src="assets/video/hero-poster.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" id="heroStill">
   </div>
   <div class="hero-inner">
-    <span class="kicker" lang="en">Steakhouse &middot; Butcher Shop &middot; BSD City</span>
-    <h1 lang="en">Cut fresh.<br>Sear to <em>perfection.</em></h1>
-    <p class="sub">Nikmati steak premium yang dibakar langsung di atas grill — lalu bawa pulang potongan daging berkualitas butcher, saus impor, dan bahan gourmet yang sama dari counter kami.</p>
-    <div class="hero-ctas">
+    <span class="kicker hero-intro" style="--d:.1s">Steakhouse &middot; Butcher Shop &middot; BSD City</span>
+    <h1 class="hero-intro hero-title" style="--d:.28s" lang="en"><span class="line"><span class="line-in">Cut fresh.</span></span><span class="line"><span class="line-in">Sear to <em>perfection.</em></span></span></h1>
+    <p class="sub hero-intro" style="--d:.62s">Nikmati steak premium yang dibakar langsung di atas grill — lalu bawa pulang potongan daging berkualitas butcher, saus impor, dan bahan gourmet yang sama dari counter kami.</p>
+    <div class="hero-ctas hero-intro" style="--d:.78s">
       <a class="btn btn-primary" href="#full-menu">Lihat pilihan menu
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=Indoguna+Meatshop+%26+Gourmet+BSD+The+Icon+Cisauk" target="_blank" rel="noopener">Petunjuk arah</a>
     </div>
-  </div>
-  <div class="hero-meta" role="presentation">
-    <strong>4.5 di Google</strong>
-    <span class="stars">★★★★★</span>
-    <span>Buka setiap hari · 08.30 – 21.00</span>
-  </div>
   <div class="scroll-hint" aria-hidden="true"></div>
 </header>
 
 <main>
 <section class="about" id="about">
+  <div class="ember-glow" aria-hidden="true"></div>
   <div class="wrap about-grid">
     <div class="about-copy reveal">
       <span class="sec-label" lang="en">About</span>
@@ -688,6 +683,140 @@ footer{
   }
 })();
 
+</script>
+
+<div class="mobile-action-bar" id="mobileActionBar" aria-label="Aksi cepat">
+  <a href="#full-menu" class="mab-item mab-primary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h16"/><circle cx="18" cy="16.5" r="2.6"/></svg>
+    <span>Menu</span>
+  </a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=-6.3150879,106.6462849" target="_blank" rel="noopener" class="mab-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 21s7-5.1 7-11a7 7 0 1 0-14 0c0 5.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+    <span>Petunjuk arah</span>
+  </a>
+  <a href="tel:+622130305524" class="mab-item">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+    <span>Telepon</span>
+  </a>
+</div>
+
+
+<script>
+/* ===== V2 motion system ===== */
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Hero intro on load */
+  function heroIn(){ document.body.classList.add('hero-loaded'); }
+  if (reduced) { heroIn(); }
+  else if (document.readyState === 'complete') { requestAnimationFrame(function(){ setTimeout(heroIn, 60); }); }
+  else { window.addEventListener('load', function(){ requestAnimationFrame(function(){ setTimeout(heroIn, 60); }); }); }
+  /* safety: never leave hero hidden if load event stalls */
+  setTimeout(heroIn, reduced ? 0 : 1400);
+
+  /* 2. Hero scroll scene + action bar visibility (single rAF) */
+  var hero = document.querySelector('.hero');
+  var heroInner = document.querySelector('.hero-inner');
+  var heroMeta = document.querySelector('.hero-meta');
+  var bar = document.getElementById('mobileActionBar');
+  var ticking = false;
+  function scene(){
+    ticking = false;
+    var sy = window.scrollY;
+    var vh = window.innerHeight;
+    var prog = Math.min(1, sy / (vh * 0.9));
+    if (!reduced) {
+      if (heroInner) {
+        heroInner.style.transform = 'translate3d(0,' + (prog * -46).toFixed(1) + 'px,0)';
+        heroInner.style.opacity = String(1 - prog * 1.15);
+      }
+      if (heroMeta) {
+        heroMeta.style.transform = 'translate3d(0,' + (prog * -30).toFixed(1) + 'px,0)';
+        heroMeta.style.opacity = String(1 - prog * 1.4);
+      }
+    }
+    /* action bar: show after 70% of hero, hide near footer */
+    if (bar) {
+      var showBar = window.matchMedia('(max-width:720px)').matches && sy > vh * 0.7;
+      if (showBar) {
+        var doc = document.documentElement;
+        var nearBottom = sy + vh > doc.scrollHeight - 220;
+        bar.classList.toggle('mab-show', !nearBottom);
+      } else {
+        bar.classList.remove('mab-show');
+      }
+    }
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(scene); }
+  }, {passive:true});
+  scene();
+
+  /* 3. Editorial reveals (masked lines, clip images, staggered fades) */
+  function markReveals(){
+    /* About section: label/heading lines, body copy, badge */
+    var about = document.getElementById('about');
+    if (!about) return;
+    var label = about.querySelector('.sec-label');
+    if (label && !label.querySelector('.rv-line')){
+      label.innerHTML = '<span class="rv-line"><span>' + label.textContent.trim() + '</span></span>';
+    }
+    var h2 = about.querySelector('.sec-title');
+    if (h2 && !h2.dataset.rv){
+      h2.dataset.rv = '1';
+      h2.innerHTML = '<span class="rv-line"><span>' + h2.innerHTML + '</span></span>';
+    }
+    about.querySelectorAll('.about-copy p').forEach(function(p,i){
+      p.classList.add('rv-fade'); p.style.setProperty('--d', (0.18 + i*0.12) + 's');
+    });
+    var facts = about.querySelector('.fact-row');
+    if (facts){ facts.classList.add('rv-fade'); facts.style.setProperty('--d','.5s'); }
+    about.querySelectorAll('.para-a,.para-b').forEach(function(img,i){
+      img.classList.add('rv-clip'); img.style.setProperty('--d', i===0?'.1s':'.3s');
+    });
+    var badge = about.querySelector('.badge-rating');
+    if (badge){ badge.classList.add('rv-fade'); badge.style.setProperty('--d','.55s'); }
+  }
+  if (!reduced) {
+    markReveals();
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        e.target.classList.add('rv-in','rv-go');
+        io.unobserve(e.target);
+      });
+    }, {threshold:.22, rootMargin:'0px 0px -8% 0px'});
+    var about = document.getElementById('about');
+    if (about){
+      [about.querySelector('.sec-label'), about.querySelector('.sec-title'), about.querySelector('.about-copy'), about.querySelector('.about-imgs')]
+        .forEach(function(el){ if (el) io.observe(el); });
+      /* safety net: force-reveal when the section is well inside the viewport */
+      setTimeout(function(){
+        var r = about.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.75 && r.bottom > 0) {
+          about.classList.add('rv-in');
+          about.querySelectorAll('.rv-clip,.rv-fade').forEach(function(el){ el.classList.add('rv-go'); });
+        }
+      }, 900);
+    }
+  }
+
+  /* 4. Ember glow drift with scroll (very subtle) */
+  var glow = document.querySelector('.ember-glow');
+  if (glow && !reduced){
+    var gTick = false;
+    window.addEventListener('scroll', function(){
+      if (gTick) return; gTick = true;
+      requestAnimationFrame(function(){
+        var r = document.getElementById('about').getBoundingClientRect();
+        var p = 1 - (r.top + r.height) / (window.innerHeight + r.height);
+        glow.style.transform = 'translate3d(0,' + (p * 34 - 17).toFixed(1) + 'px,0)';
+        glow.style.opacity = String(0.75 + p*0.25);
+        gTick = false;
+      });
+    }, {passive:true});
+  }
+})();
 </script>
 <script src="assets/js/menu.js" defer></script>
 </body>
