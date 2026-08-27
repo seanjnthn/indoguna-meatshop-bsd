@@ -1,0 +1,15 @@
+{
+  "name": "indoguna-meatshop-bsd",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Static website and reproducible visual QA for Indoguna Meatshop & Gourmet BSD.",
+  "scripts": {
+    "serve": "python3 -m http.server 8471",
+    "audit:assets": "node scripts/audit-menu-assets.mjs",
+    "qa": "npm run audit:assets && node qa/v4_verify.js",
+    "qa:v4": "node qa/v4_verify.js"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

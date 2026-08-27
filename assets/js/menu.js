@@ -112,6 +112,10 @@
       t.tabIndex = sel ? 0 : -1;
     });
     state.cat = btn.dataset.cat;
+    if (tablist.scrollWidth > tablist.clientWidth) {
+      var targetLeft = btn.offsetLeft - (tablist.clientWidth - btn.offsetWidth) / 2;
+      tablist.scrollTo({ left: Math.max(0, targetLeft), behavior: reduced ? "auto" : "smooth" });
+    }
     if (window.INDOGUNA_ANALYTICS) {
       window.INDOGUNA_ANALYTICS.trackEvent("menu_filter_selected", { category: state.cat });
     }
@@ -198,6 +202,8 @@
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      drawer.toggleAttribute("inert", !open);
+      document.body.classList.toggle("nav-open", open);
       document.body.style.overflow = open ? "hidden" : "";
       if (open) {
         lastFocus = document.activeElement;
@@ -211,13 +217,26 @@
       setNav(!drawer.classList.contains("open"));
     });
     drawer.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") setNav(false);
+      if (e.target.closest("a")) setNav(false);
       /* outside click handled on document below */
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && drawer.classList.contains("open")) {
         setNav(false);
         toggle.focus();
+      }
+      if (e.key === "Tab" && drawer.classList.contains("open")) {
+        var links = [].slice.call(drawer.querySelectorAll("a[href]"));
+        if (!links.length) return;
+        var first = links[0];
+        var last = links[links.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
     /* Close when clicking outside the drawer */
@@ -230,5 +249,6 @@
         setNav(false);
       }
     });
+    setNav(false);
   }
 })();

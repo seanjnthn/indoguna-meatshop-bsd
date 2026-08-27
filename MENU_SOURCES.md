@@ -59,12 +59,14 @@ The following describe other branches of the same brand. Per content rules they 
 4. Whether delivery platforms (GoFood/GrabFood/ShopeeFood) carry the BSD branch under a different listing name.
 5. Exact appearance/plating of each dish for replacing illustration images with real photographs (see IMAGE_SEARCH_QUERIES.md).
 
-## Image provenance (added 2026-08-26)
+## Image provenance (added 2026-08-26, updated 2026-08-27)
 
-All synthetic imagery was replaced with licensed Pexels photography under the Pexels License
-(free for commercial use, no attribution required, no hotlinking). Full per-image records:
-`assets/data/image-credits.json`. All menu photos are marked `representative` ("Foto referensi")
-— none depict Indoguna's actual plating. Sources verified 2026-08-26.
+Menu and supporting section photography uses licensed Pexels/Pixabay photography under the
+corresponding content licenses (no hotlinking). The V4 hero and its social crop are original
+AI-assisted art direction created specifically for this website with OpenAI ImageGen. Full
+per-image records live in `assets/data/image-credits.json`. All menu photos and the hero are
+marked `representative` — none depict Indoguna's exact plating. Stock sources were verified
+2026-08-26; the hero was generated 2026-08-27.
 
 ### S5 — Spending range (visible copy + priceRange support)
 

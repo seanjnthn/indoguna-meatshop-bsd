@@ -34,7 +34,7 @@ const srcAssetIds = new Map();     // sourceAssetId -> slot
 const creditByFile = new Map();
 for (const c of credits) creditByFile.set(c.file, c);
 
-const SIZE_LIMITS = { "assets/video/hero-poster.jpg": 450, default: 250, menu: 180 };
+const SIZE_LIMITS = { "assets/video/hero-v2.jpg": 450, default: 250, menu: 180 };
 
 function checkFile(file, limitKB, label) {
   stats.checked++;
@@ -104,7 +104,7 @@ MENU.forEach((it, idx) => {
 
 // ---------- Site-level assets ----------
 const SITE_ASSETS = [
-  ["assets/video/hero-poster.jpg", SIZE_LIMITS["assets/video/hero-poster.jpg"], "site-hero"],
+  ["assets/video/hero-v2.jpg", SIZE_LIMITS["assets/video/hero-v2.jpg"], "site-hero"],
   ["assets/img/about-modern-butcher-counter.webp", SIZE_LIMITS.default, "site-about"],
   ["assets/img/butcher-cut.webp", SIZE_LIMITS.default, "site-butcher"],
   ["assets/img/counter-steaks.webp", SIZE_LIMITS.default, "site-counter-steaks"],
@@ -115,14 +115,17 @@ for (const [file, lim, label] of SITE_ASSETS) {
   checkFile(file, lim, label);
   const credit = creditByFile.get(file);
   if (!credit) { err(`${label}: no credit record`); stats.missingCredits++; continue; }
-  if (!credit.sourcePageUrl || !credit.sourceName) { err(`${label}: credit incomplete`); stats.missingCredits++; continue; }
-  if (srcPages.has(credit.sourcePageUrl)) {
-    err(`duplicate source photograph across slots: ${credit.sourcePageUrl} also used by "${srcPages.get(credit.sourcePageUrl)}"`);
-    stats.dupSources++;
-  } else srcPages.set(credit.sourcePageUrl, label);
+  const generated = credit.sourcePlatform === "OpenAI ImageGen";
+  if (!credit.sourceName || (!generated && !credit.sourcePageUrl)) { err(`${label}: credit incomplete`); stats.missingCredits++; continue; }
+  if (credit.sourcePageUrl) {
+    if (srcPages.has(credit.sourcePageUrl)) {
+      err(`duplicate source photograph across slots: ${credit.sourcePageUrl} also used by "${srcPages.get(credit.sourcePageUrl)}"`);
+      stats.dupSources++;
+    } else srcPages.set(credit.sourcePageUrl, label);
+  }
 }
 // OG image may share hero source — verify that's the ONLY overlap
-const ogCredit = credits.find(c => (c.altFiles || []).includes("assets/img/og-image.jpg") || c.file === "assets/img/og-image.jpg");
+const ogCredit = credits.find(c => (c.altFiles || []).includes("assets/img/og-image-v2.jpg") || c.file === "assets/img/og-image-v2.jpg");
 
 // index.html references resolve?
 const html = readFileSync(path.join(root, "index.html"), "utf8");

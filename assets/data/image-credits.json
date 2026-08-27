@@ -109,20 +109,17 @@
   },
   {
     "assetId": "site-hero",
-    "file": "assets/video/hero-poster.jpg",
+    "file": "assets/video/hero-v2.jpg",
     "altFiles": [
-      "assets/img/og-image.jpg"
+      "assets/img/og-image-v2.jpg"
     ],
-    "sourcePlatform": "Pexels",
-    "sourceAssetId": "36101015",
-    "sourceName": "Mohamed Olwy",
-    "sourcePageUrl": "https://www.pexels.com/photo/36101015/",
-    "licenseName": "Pexels License",
-    "licensePageUrl": "https://www.pexels.com/license/",
-    "licenseChecked": "2026-08-26",
+    "sourcePlatform": "OpenAI ImageGen",
+    "sourceAssetId": "exec-7a699ccb-d495-4ca4-9048-fa5a55b1da27",
+    "sourceName": "Original AI-assisted art direction for this project",
+    "generatedOn": "2026-08-27",
     "requiresAttribution": false,
     "imageStatus": "representative",
-    "usageNotes": "Hero photograph (steak on grill with flames). OG image derives from the same source asset, used once visibly (hero) plus social preview."
+    "usageNotes": "Original wide hero artwork generated for this website. The OG image is a crop of the same asset. It is representative and does not depict the restaurant's exact plating."
   },
   {
     "assetId": "site-about-counter",
