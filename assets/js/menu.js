@@ -156,6 +156,15 @@
       render();
     }, reduced ? 0 : 120);
   });
+  search.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && search.value) {
+      e.stopPropagation();
+      search.value = "";
+      state.q = "";
+      clearBtn.hidden = true;
+      render();
+    }
+  });
   clearBtn.addEventListener("click", function () {
     search.value = "";
     state.q = "";

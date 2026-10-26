@@ -65,6 +65,24 @@ function delay(ms) {
     assert(desktopControls.navIndicatorWidth > 20, "desktop nav capsule did not initialize");
     assert(desktopControls.filterDeltaX === 0 && desktopControls.filterDeltaW === 0, "menu capsule is misaligned");
 
+    const searchWrapRole = await page.evaluate(() => document.getElementById("menuSearchWrap").getAttribute("role"));
+    assert(searchWrapRole === "search", "search container lacks role='search'");
+
+    await page.evaluate(() => {
+      const s = document.getElementById("menuSearch");
+      s.value = "wagyu";
+      s.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+    await page.waitForTimeout(300);
+
+    await page.evaluate(() => {
+      const s = document.getElementById("menuSearch");
+      s.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    });
+    await page.waitForTimeout(300);
+    const resetSearchVal = await page.evaluate(() => document.getElementById("menuSearch").value);
+    assert(resetSearchVal === "", "search input was not cleared by Escape key");
+
     const grill = page.getByRole("tab", { name: "Dari Grill" });
     await grill.click();
     await grill.press("ArrowRight");
